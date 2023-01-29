@@ -1,4 +1,9 @@
+using RssApi.Extensions;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.ConfigureDbContext(builder.Configuration);
+builder.Services.AddIdentity();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

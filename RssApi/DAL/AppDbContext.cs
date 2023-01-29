@@ -1,8 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using RssApi.DAL.Entities;
 
 namespace RssApi.DAL;
 
-public class AppDbContext: DbContext
+public class AppDbContext: IdentityDbContext
 {
     public AppDbContext(DbContextOptions<AppDbContext> options)
         :base(options)
@@ -16,4 +18,6 @@ public class AppDbContext: DbContext
 
         modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
     }
+
+    public DbSet<UserRssFeed> UserRssFeeds { get; set; } = default;
 }

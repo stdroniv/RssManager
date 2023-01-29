@@ -2,7 +2,7 @@
 
 namespace RssApi.DAL.Entities;
 
-public class User: IdentityUser
+public class User: IdentityUser<string>
 {
     public string LastName { get; set; } = string.Empty;
 
