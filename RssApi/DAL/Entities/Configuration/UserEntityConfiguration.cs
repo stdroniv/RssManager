@@ -9,6 +9,9 @@ public class UserEntityConfiguration: IEntityTypeConfiguration<User>
     {
         builder.HasKey(it => it.Id);
 
+        builder.Property(it => it.Id)
+            .ValueGeneratedOnAdd();
+
         builder
             .HasMany<UserRssFeed>(it => it.UserFeeds)
             .WithOne(f => f.User)

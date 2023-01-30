@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using RssApi.BLL.Contracts;
+using RssApi.BLL.Services;
+using RssApi.Configuration;
 using RssApi.DAL;
 using RssApi.DAL.Entities;
 
@@ -16,6 +19,13 @@ public static class ServiceExtensions
             {
                 o.Password.RequireNonAlphanumeric = false;
             })
-            .AddEntityFrameworkStores<AppDbContext>();
+            .AddEntityFrameworkStores<AppDbContext>()
+            .AddDefaultTokenProviders();
+
+    public static void ConfigureServices(this IServiceCollection services)
+    {
+        services.AddScoped<IAuthenticationService, AuthenticationService>();
+        services.AddTransient<IDateTimeProvider, DateTimeProvider>();
+    }
 }
 
