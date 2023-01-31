@@ -1,10 +1,12 @@
 ﻿using System.Text;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RssApi.BLL.Contracts;
 using RssApi.BLL.DTOs;
 
 namespace RssApi.Controllers;
 
+[AllowAnonymous]
 public class AuthenticationController: BaseApiController
 {
     private readonly IAuthenticationService _authService;
@@ -14,8 +16,8 @@ public class AuthenticationController: BaseApiController
         _authService = authService;
     }
 
-    [HttpPost]
-    public async Task<IActionResult> Register([FromBody]UserForRegistrationDto userDto)
+    [HttpPost("register")]
+    public async Task<IActionResult> Register([FromBody] UserForRegistrationDto userDto)
     {
         var result = await _authService.RegisterUser(userDto);
 
@@ -31,5 +33,18 @@ public class AuthenticationController: BaseApiController
         }
 
         return StatusCode(201);
+    }
+
+    [HttpPost("login")]
+    public async Task<IActionResult> Authenticate([FromBody] UserForAuthenticationDto userDto)
+    {
+        if (!await _authService.ValidateUser(userDto))
+        {
+            return Unauthorized();
+        }
+
+        var token = await _authService.CreateToken();
+
+        return Ok(new { Token = token });
     }
 }
