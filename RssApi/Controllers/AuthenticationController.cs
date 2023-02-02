@@ -23,16 +23,12 @@ public class AuthenticationController: BaseApiController
 
         if (!result.Succeeded)
         {
-            StringBuilder errorsMsg = new StringBuilder();
-            foreach (var error in result.Errors)
-            {
-                errorsMsg.Append($"{error.Code} - {error.Description}");
-            }
-
-            return BadRequest(errorsMsg.ToString());
+            return BadRequest(string.Join(";\n", result.Errors.Select(e => $"{e.Code} - {e.Description}")));
         }
 
-        return StatusCode(201);
+        var token = await _authService.CreateToken();
+
+        return Ok(new { Token = token });
     }
 
     [HttpPost("login")]

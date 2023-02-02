@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RssApi.DAL;
 
@@ -10,9 +11,11 @@ using RssApi.DAL;
 namespace RssApi.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230201200338_AddPosts")]
+    partial class AddPosts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.2");
@@ -214,6 +217,10 @@ namespace RssApi.DAL.Migrations
                     b.Property<string>("PostUri")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("FeedUri")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -225,10 +232,6 @@ namespace RssApi.DAL.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Summary")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("TEXT");
 

@@ -20,4 +20,6 @@ public class AppDbContext: IdentityDbContext
     }
 
     public DbSet<UserRssFeed> UserRssFeeds { get; set; } = default;
+
+    public DbSet<SimplePost> UserPosts { get; set; } = default;
 }

@@ -8,11 +8,12 @@ builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection(JwtSett
 
 builder.Services.ConfigureDbContext(builder.Configuration);
 builder.Services.ConfigureServices();
-builder.Services.ConfigureJwt(builder.Configuration.GetValue<JwtSettings>(JwtSettings.Key)!);
+builder.Services.ConfigureCors();
+builder.Services.ConfigureJwt(builder.Configuration);
+builder.Services.ConfigureSwagger();
 
 builder.Services.AddIdentity();
-
-builder.Services.AddAuthentication();
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddControllers();
 builder.Services.AddFluentValidationAutoValidation();
@@ -29,6 +30,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("CorsPolicy");
+
+app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();

@@ -5,7 +5,7 @@ namespace RssApi.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize]
+[Authorize(AuthenticationSchemes = "Bearer")]
 public class BaseApiController : ControllerBase
 {
     

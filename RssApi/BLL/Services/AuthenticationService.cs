@@ -39,6 +39,10 @@ public class AuthenticationService: IAuthenticationService
         };
 
         var res = await _userManager.CreateAsync(user, userDto.Password);
+        if (res.Succeeded)
+        {
+            _user = user;
+        }
 
         return res;
     }
